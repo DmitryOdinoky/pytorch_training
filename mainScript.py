@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+
 import torch
 import torchvision
 from torchvision import transforms, datasets
@@ -8,7 +8,7 @@ import torch.nn.functional as F
 
 import torch.optim as optim
 
-
+## setting un the dataset
 
 train = datasets.MNIST('', train=True, download=True,
                         transform=transforms.Compose([
@@ -22,7 +22,7 @@ testset = torch.utils.data.DataLoader(test, batch_size=10, shuffle=False)
 
 #%%
 
-
+## initializing the network
 
 
 class Net(nn.Module):
@@ -53,7 +53,7 @@ output = net(X)
 
 #%%
 
-
+## backprop in 3 epochs
 
 optimizer = optim.Adam(net.parameters(), lr=0.001)
 
@@ -72,6 +72,7 @@ for epoch in range(EPOCHS):
     
 #%%
 
+## accuracy revision
         
 correct = 0
 total = 0
@@ -84,10 +85,12 @@ with torch.no_grad():
             if torch.argmax(i) == y[idx]:
                 correct += 1
             total += 1
+            
 print("Accuracy: ", round(correct/total, 3))
 
 #%%
 
+## printing the images and verifying their labeling
 
 import matplotlib as plt
 
