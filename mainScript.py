@@ -58,6 +58,7 @@ output = net(X)
 optimizer = optim.Adam(net.parameters(), lr=0.001)
 
 EPOCHS = 3
+loss_history = []
 
 for epoch in range(EPOCHS):
     for data in trainset:
@@ -68,7 +69,11 @@ for epoch in range(EPOCHS):
         loss = F.nll_loss(output, y)
         loss.backward()
         optimizer.step()
+        
+    loss_history.append(loss.item())    
     print(loss)
+    
+    
     
 #%%
 
@@ -94,9 +99,25 @@ print("Accuracy: ", round(correct/total, 3))
 
 import matplotlib as plt
 
-targetDigit = 3
+targetDigit = 4
 
 plt.pyplot.imshow(X[targetDigit].view(28,28))
 
 print(torch.argmax(net(X[targetDigit].view(-1,784))[0]))
+
+#%%
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+epochs = np.linspace(1, EPOCHS,num=EPOCHS)
+
+fig, ax = plt.subplots(1)
+
+
+
+ax.plot(epochs, loss_history[::-1])
+
+plt.show()
+
 
