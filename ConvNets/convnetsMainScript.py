@@ -66,7 +66,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
-#%% enable GPU processing
+#%%
 
 
 if torch.cuda.is_available():
@@ -168,9 +168,5 @@ with torch.no_grad():
         total += 1
 print("Accuracy: ", round(correct/total, 3))
 
-
 #%%
 
-
-
-    
