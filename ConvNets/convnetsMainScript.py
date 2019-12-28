@@ -57,11 +57,27 @@ training_data = np.load("training_data.npy",allow_pickle=True)
 plt.imshow(training_data[1][0], cmap="gray")
 plt.show()
 
+
+
 #%%
 
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+
+
+#%% enable GPU processing
+
+
+if torch.cuda.is_available():
+    device = torch.device("cuda:0")  # you can continue going on here, like cuda:1 cuda:2....etc. 
+    print("Running on the GPU")
+else:
+    device = torch.device("cpu")
+    print("Running on the CPU")
+
+
+#%%
 
 class Net(nn.Module):
     def __init__(self):
@@ -122,7 +138,7 @@ test_y = y[-val_size:]
 print(len(train_X), len(test_X))
 
 BATCH_SIZE = 100
-EPOCHS = 1
+EPOCHS = 3
 
 for epoch in range(EPOCHS):
     for i in tqdm(range(0, len(train_X), BATCH_SIZE)): # from 0, to the len of x, stepping BATCH_SIZE at a time. [:50] ..for now just to dev
@@ -151,5 +167,10 @@ with torch.no_grad():
             correct += 1
         total += 1
 print("Accuracy: ", round(correct/total, 3))
+
+
+#%%
+
+
 
     
